@@ -149,6 +149,7 @@ html, body {
     min-height: 100vh;
     padding-top: var(--tam-header); 
     scroll-snap-align: start; 
+    scroll-behavior: smooth;
 }
 
 #section1-introducao {
