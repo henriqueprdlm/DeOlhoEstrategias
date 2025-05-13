@@ -7,8 +7,8 @@
     --roxo5: #e57eff;
     --cinza: #f0f0f0;
 
-    --tam-header: 100px;
-    --tam-pag-com-header: calc(100vh - 100px);
+    --tam-header: 105px;
+    --tam-pag-com-header: calc(100vh - 105px);
     --tam-footer: 71px;
     --tam-pag-com-footer: calc(100vh - 71px);
 }  
@@ -43,6 +43,7 @@ header {
     position: fixed;
     padding: 20px;
     z-index: 1000;
+    height: var(--tam-header);
 
     & nav {
         display: flex;
@@ -138,6 +139,7 @@ footer {
 html, body {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    background-color: var(--roxo1);
 }
 
 #section1-introducao,
@@ -147,7 +149,8 @@ html, body {
 #section5-clientes, 
 #section6-final {
     min-height: 100vh;
-    padding-top: var(--tam-header); 
+    padding-top: calc(var(--tam-header) + 25px);
+    padding-bottom: 25px; 
     scroll-snap-align: start; 
     scroll-behavior: smooth;
 }
@@ -286,7 +289,7 @@ html, body {
             overflow: hidden;
 
             & img {
-                width: 250px;
+                width: 230px;
                 object-fit: cover;
                 border-radius: 16px 0 0 16px;
             }
@@ -315,32 +318,45 @@ html, body {
 #section5-clientes {
     background-color: var(--roxo1);
 
+    & .container {
+        height: calc(var(--tam-pag-com-header) - 100px - 25px);
+    }
+
     & h1 {
         color: white;
         margin-top: 30px;
         margin-bottom: 25px;
     }
 
-    & .clientes {
+    & .container-clientes {
+        height: 100%;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 20px;
-    
-        .box {
-            padding: 10px;
-            flex: 0 1 calc(25% - 15px);
-            max-width: 250px;
+        padding-bottom: 25px;
 
-            img {
-                display: block;
-                width: 100%;
-                height: auto;
-                border-radius: 16px;
-                object-fit: cover;
-                object-position: center;
-                aspect-ratio: 1 / 1;
+        & .clientes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        
+            .box {
+                padding: 10px;
+                flex: 0 1 calc(25% - 15px);
+                max-width: 250px;
+    
+                img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    border-radius: 16px;
+                    object-fit: cover;
+                    object-position: center;
+                    aspect-ratio: 1 / 1;
+                }
             }
         }
     }
@@ -458,7 +474,7 @@ html, body {
 
                 & img {
                     grid-area: img;
-                    width: 200px;
+                    max-width: 200px;
                     aspect-ratio: 3 / 4;
                     object-fit: cover;
                     border-radius: 16px 0 16px 0px;
@@ -577,13 +593,30 @@ html, body {
     }
 
     #section5-clientes {
+        & .container {
+            height: auto;
+        }
+
+        & .container-clientes {
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 0px;
+
+            & .clientes .box {
+                flex: 0 1 calc(50% - 10px);
+            }
+        }
+
         & h1 {
             margin-top: 0px;
         }
 
-        & .clientes .box {
-            flex: 0 1 calc(50% - 10px);
-        }
+        
+
+       
     }
 
     #section6-final {
