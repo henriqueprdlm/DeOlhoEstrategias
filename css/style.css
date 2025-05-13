@@ -508,7 +508,16 @@ html, body {
 }
 
 
-@media (max-width: 800px) {
+@media (max-width: 800px) { 
+    :root {
+        --tam-header: 95px;
+        --tam-pag-com-header: calc(100vh - 95px);
+    }  
+
+    header nav a .logo {
+        height: 50px ;
+    }
+
     /* Scroll */
     html, body {
         scroll-snap-type: none;
@@ -614,9 +623,6 @@ html, body {
             margin-top: 0px;
         }
 
-        
-
-       
     }
 
     #section6-final {
