@@ -535,16 +535,20 @@ html, body {
         padding: 75px 0;
     }
 
-
     #section1-introducao {
-        padding-top: calc(var(--tam-header) + 75px);
+        padding-top: calc(var(--tam-header) + 50px);
+        padding-bottom: 50px;
+        min-height: 100vh;
 
         & .box {
             flex-direction: column;
 
+            & div h1 {
+                font-size: 30px;
+            }
+
             & img {
-                border-radius: 0 0 16px 16px;
-                width: 100%;
+                display: none;
             }
         }
     }
