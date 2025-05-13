@@ -11,37 +11,7 @@
     --tam-pag-com-header: calc(100vh - 100px);
     --tam-footer: 71px;
     --tam-pag-com-footer: calc(100vh - 71px);
-}
-
-/* Fontes */
-@font-face {
-    font-family: 'Poppins';
-    src: url('./fonts/poppins/Poppins-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-}
-  
-@font-face {
-    font-family: 'Poppins';
-    src: url('./fonts/poppins/Poppins-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Poppins';
-    src: url('./fonts/poppins/Poppins-Italic.ttf') format('truetype');
-    font-weight: 400;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'Poppins';
-    src: url('./fonts/poppins/Poppins-SemiBold.ttf') format('truetype');
-    font-weight: 600;
-    font-style: normal;
-}
-  
+}  
 
 
 * {
@@ -174,7 +144,8 @@ html, body {
 #section2-sobrenos,
 #section3-nossosservicos,
 #section4-nossotime,
-#section5-clientes {
+#section5-clientes, 
+#section6-final {
     min-height: 100vh;
     padding-top: var(--tam-header); 
     scroll-snap-align: start; 
@@ -294,6 +265,7 @@ html, body {
 
 #section4-nossotime {
     background-color: var(--cinza);
+    padding-bottom: 75px;
 
     & h1 {
         margin-top: 30px;
@@ -301,26 +273,35 @@ html, body {
     }
 
     & .time {
-        display: flex;
-        gap: 20px;
-        justify-content: space-around;
-        align-items: center;
+        display: grid;
+        row-gap: 25px;
+        grid-auto-rows: 1fr;
     
-        .box {
+        & .box {
             padding: 0;
-            max-width: 300px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: stretch;
+            overflow: hidden;
 
             & img {
-                width: 100%;
-                height: auto;
-                border-radius: 16px 16px 0 0;
+                width: 250px;
                 object-fit: cover;
-                object-position: center;
-                aspect-ratio: 1 / 1;
+                border-radius: 16px 0 0 16px;
             }
 
             & .texto {
-                padding: 10px 20px 20px 20px;
+                padding: 10px 20px 20px 20px;  
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                
+                & .descricao {
+                    margin-top: 10px;
+                    font-size: 14px;
+                }
             }
 
             &:hover {
@@ -406,25 +387,7 @@ html, body {
     }
 }
 
-
-@media (max-width: 800px) {
-    /* Scroll */
-    html, body {
-        scroll-snap-type: none;
-        scroll-behavior: none;
-    }
-
-    #section1-introducao,
-    #section2-sobrenos,
-    #section3-nossosservicos,
-    #section4-nossotime,
-    #section5-clientes,
-    #section6-final {
-        min-height: 0;
-        scroll-snap-align: none; 
-        padding: 75px 0;
-    }
-
+@media (max-width: 930px) {
     /* Menu */
     body{
         overflow-x: hidden;
@@ -481,6 +444,73 @@ html, body {
     }
 
 
+    #section4-nossotime {
+        & .time {
+            & .box {
+                display: grid !important;
+                grid-template-areas: 
+                    "img nome"
+                    "descricao descricao";
+                grid-template-columns: 200px 1fr;
+                grid-auto-rows: auto;
+                align-items: stretch;
+                overflow: visible;
+
+                & img {
+                    grid-area: img;
+                    width: 200px;
+                    aspect-ratio: 3 / 4;
+                    object-fit: cover;
+                    border-radius: 16px 0 16px 0px;
+                }
+
+                & .texto {
+                    display: contents;
+
+                    & .nome {
+                        grid-area: nome;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 20px;
+                    }
+                    
+                    & .descricao {
+                        grid-area: descricao;
+                        padding: 10px 20px 20px;
+                    }
+                }
+
+                &:hover {
+                    transform: scale(1.03);
+                    transition: all 0.3s ease;
+                }
+            }
+        }
+    }
+}
+
+
+@media (max-width: 800px) {
+    /* Scroll */
+    html, body {
+        scroll-snap-type: none;
+        scroll-behavior: none;
+    }
+
+    #section1-introducao,
+    #section2-sobrenos,
+    #section3-nossosservicos,
+    #section4-nossotime,
+    #section5-clientes,
+    #section6-final {
+        min-height: 0;
+        scroll-snap-align: none; 
+        padding: 75px 0;
+    }
+
+
     #section1-introducao {
         padding-top: calc(var(--tam-header) + 75px);
 
@@ -514,7 +544,7 @@ html, body {
             gap: 25px;
         
             & .box {
-                position: relative;
+                position: static;
                 padding: 25px;
                 margin: 0px !important;
             }
@@ -530,9 +560,19 @@ html, body {
         & h1 {
             margin-top: 0px;
         }
+
         & .time {
             flex-direction: column;
             gap: 30px;
+
+            & .box {
+                & .texto {
+                    & .nome {
+                        align-items: flex-start;
+                        justify-content: center;
+                    }
+                }
+            }
         }
     }
 
@@ -543,6 +583,12 @@ html, body {
 
         & .clientes .box {
             flex: 0 1 calc(50% - 10px);
+        }
+    }
+
+    #section6-final {
+        & .contato-final{
+            margin-top: 50px;
         }
     }
 }
