@@ -195,6 +195,9 @@ html, body {
 
 #section2-sobrenos {
     background-color: var(--cinza);
+    /* background-image: url(../img/teste1.jpg);
+    background-size: cover;
+    background-position: center; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -268,6 +271,9 @@ html, body {
 
 #section4-nossotime {
     background-color: var(--cinza);
+    /* background-image: url(../img/teste2.jpg);
+    background-size: cover;
+    background-position: center; */
     padding-bottom: 75px;
 
     & h1 {
@@ -363,6 +369,9 @@ html, body {
 }
 
 #section6-final {
+    /* background-image: url(../img/teste.jpeg);
+    background-size: cover;
+    background-position: center; */
     min-height: var(--tam-pag-com-footer);
     padding-top: var(--tam-header); 
     scroll-snap-align: start; 
@@ -394,6 +403,7 @@ html, body {
             text-decoration: none;
             font-size: 20px;
             transition: all 0.2s ease;
+            text-align: center;
         }
     
         & a.btn-contato-final:hover {
@@ -645,11 +655,11 @@ html, body {
             margin-top: 50px;
 
             & h1 {
-                font-size: 30px;
+                font-size: 25px;
             }
             
             & a.btn-contato-final {
-                font-size: 16px;
+                font-size: 18px;
             }
         }
     }
