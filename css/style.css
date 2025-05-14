@@ -404,7 +404,7 @@ html, body {
 }
 
 @media (max-width: 930px) {
-    /* Menu */
+    /* Menu */    
     body{
         overflow-x: hidden;
     }
@@ -514,6 +514,10 @@ html, body {
         --tam-pag-com-header: calc(100vh - 95px);
     }  
 
+    html {
+        scroll-padding-top: var(--tam-header);
+    }
+
     header nav a .logo {
         height: 50px ;
     }
@@ -532,11 +536,11 @@ html, body {
     #section6-final {
         min-height: 0;
         scroll-snap-align: none; 
-        padding: 75px 0;
+        padding: 30px 0;
     }
 
     #section1-introducao {
-        padding-top: calc(var(--tam-header) + 50px);
+        padding-top: var(--tam-header);
         padding-bottom: 50px;
         min-height: 100vh;
 
@@ -630,8 +634,17 @@ html, body {
     }
 
     #section6-final {
-        & .contato-final{
+
+        & .contato-final {
             margin-top: 50px;
+
+            & h1 {
+                font-size: 30px;
+            }
+            
+            & a.btn-contato-final {
+                font-size: 16px;
+            }
         }
     }
 }
