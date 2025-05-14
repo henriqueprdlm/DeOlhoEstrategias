@@ -1,3 +1,5 @@
 arrumar scroll
 criar favicon
-alinhar clientes centralizado desktop
+header menor?
+padding maior embaixo nav botao
+tirar imagens em mobile
