@@ -7,10 +7,11 @@
     --roxo5: #e57eff;
     --cinza: #f0f0f0;
 
-    --tam-header: 105px;
-    --tam-pag-com-header: calc(100vh - 105px);
+    --tam-header: 85px;
+    --tam-pag-com-header: calc(100vh - 85px);
     --tam-footer: 71px;
     --tam-pag-com-footer: calc(100vh - 71px);
+    --tam-container-centralizar: calc(var(--tam-pag-com-header) - 85px - 25px);
 }  
 
 
@@ -41,7 +42,7 @@ header {
     color: white;
     width: 100%;
     position: fixed;
-    padding: 20px;
+    padding: 15px;
     z-index: 1000;
     height: var(--tam-header);
 
@@ -52,7 +53,7 @@ header {
 
         & .logo {
             display: block;
-            height: 60px;
+            height: 50px;
         }
 
         & ul {
@@ -137,9 +138,9 @@ footer {
 }
 
 html, body {
-    scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     background-color: var(--roxo1);
+    overflow-x: hidden;
 }
 
 #section1-introducao,
@@ -153,6 +154,13 @@ html, body {
     padding-bottom: 25px; 
     scroll-snap-align: start; 
     scroll-behavior: smooth;
+}
+
+img.circle {
+    width: 350px;
+    position: absolute;
+    will-change: transform;
+    transition: transform 0.1s linear;
 }
 
 #section1-introducao {
@@ -189,13 +197,18 @@ html, body {
             width: calc(100vw / 3);
             height: auto;
         }
-        
+    }
+
+    & img.circle {
+        bottom: -120px;
+        right: -120px;
+        overflow: hidden;
     }
 }
 
 #section2-sobrenos {
     background-color: var(--cinza);
-    background-image: url(../img/teste1.jpg);
+    background-image: url(../img/fundo7.jpg);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -219,13 +232,9 @@ html, body {
     background-color: var(--roxo1); 
     position: relative;
     padding-bottom: 0;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
 
     & .container {
-        height: calc(var(--tam-pag-com-header) - 105px - 90px);
+        height: calc(var(--tam-container-centralizar) - 65px);
 
         & .container-servicos {
             height: 100%;
@@ -293,6 +302,20 @@ html, body {
         margin-bottom: 25px;
     }
 
+    & .container {
+        height: var(--tam-container-centralizar);
+        
+        & .container-time {
+            height: 100%;
+            min-height: fit-content;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 25px;
+        }
+    }
+
     & .time {
         display: grid;
         row-gap: 25px;
@@ -307,7 +330,7 @@ html, body {
             overflow: hidden;
 
             & img {
-                width: 230px;
+                width: 200px;
                 object-fit: cover;
                 border-radius: 16px 0 0 16px;
             }
@@ -337,7 +360,7 @@ html, body {
     background-color: var(--roxo1);
 
     & .container {
-        height: calc(var(--tam-pag-com-header) - 105px - 25px);
+        height: var(--tam-container-centralizar);
     }
 
     & h1 {
@@ -483,6 +506,10 @@ html, body {
     }
 
 
+    img.circle {
+        display: none;
+    }
+
     #section4-nossotime {
         & .time {
             & .box {
@@ -560,6 +587,7 @@ html, body {
         min-height: 0;
         scroll-snap-align: none; 
         padding: 50px 0;
+        background-image: none;
     }
 
     #section1-introducao {

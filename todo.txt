@@ -1,5 +1,2 @@
 arrumar scroll
-criar favicon
-header menor?
-padding maior embaixo nav botao
-tirar imagens em mobile
+imagens
