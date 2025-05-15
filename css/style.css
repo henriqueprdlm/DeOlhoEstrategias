@@ -206,7 +206,7 @@ img.circle {
 
 #section2-sobrenos {
     background-color: var(--cinza);
-    background-image: url(../img/fundo1.jpg);
+    background-image: url(../img/fundo1.png);
     background-size: cover;
     background-position: center;
     display: flex;
