@@ -2,59 +2,77 @@
 document.addEventListener('DOMContentLoaded', () => {
     const sections = Array.from(document.querySelectorAll('[id^="section"]'));
     let currentIndex = 0;
-    let busy = false;
-    const DURATION = 600; // ms de animação
+    let gestureActive = false;
+    const duration = 600; // ms de duração da animação
   
-    // easing easeInOutQuad
-    function ease(t) {
+    // easing suave
+    function easeInOutQuad(t) {
       return t < 0.5
         ? 2 * t * t
         : -1 + (4 - 2 * t) * t;
     }
   
-    // anima manual
-    function smoothScrollTo(y, done) {
-      const start = window.scrollY;
-      const delta = y - start;
-      let t0 = null;
+    // animação do scroll
+    function smoothScrollTo(targetY, callback) {
+      const startY = window.scrollY;
+      const deltaY = targetY - startY;
+      let startTime = null;
   
-      function step(ts) {
-        if (!t0) t0 = ts;
-        const elapsed = ts - t0;
-        const p = Math.min(elapsed / DURATION, 1);
-        window.scrollTo(0, start + delta * ease(p));
-        if (p < 1) requestAnimationFrame(step);
-        else done && done();
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        window.scrollTo(
+          0,
+          startY + deltaY * easeInOutQuad(progress)
+        );
+        if (elapsed < duration) {
+          requestAnimationFrame(step);
+        } else {
+          callback && callback();
+        }
       }
   
       requestAnimationFrame(step);
     }
   
-    // ajusta índice inicial se recarregar no meio da página
+    // Determina índice inicial (se recarregar no meio da página)
     sections.forEach((sec, i) => {
       if (window.scrollY >= sec.offsetTop - 10) currentIndex = i;
     });
   
+    // Listener único de roda do mouse
     window.addEventListener('wheel', e => {
       // só desktop
       if (window.innerWidth <= 800) return;
   
-      // **apenas roda “linhas” (wheel físico), não trackpad**
+      // só roda física (linhas), não trackpad (pixels)
       if (e.deltaMode !== 1) return;
   
       e.preventDefault();
-      if (busy) return;
   
-      let next = currentIndex;
-      if (e.deltaY > 0 && currentIndex < sections.length - 1) next++;
-      else if (e.deltaY < 0 && currentIndex > 0) next--;
-      else return;
+      // ignora se já estamos animando
+      if (gestureActive) return;
   
-      busy = true;
-      currentIndex = next;
-      smoothScrollTo(sections[currentIndex].offsetTop, () => {
-        busy = false;
-      });
+      // decide direção (qualquer deltaY, sem threshold)
+      let nextIndex = currentIndex;
+      if (e.deltaY > 0 && currentIndex < sections.length - 1) {
+        nextIndex++;
+      } else if (e.deltaY < 0 && currentIndex > 0) {
+        nextIndex--;
+      } else {
+        return; // sem seção válida para ir
+      }
+  
+      // bloqueia novos eventos até o callback
+      gestureActive = true;
+      currentIndex = nextIndex;
+  
+      smoothScrollTo(
+        sections[currentIndex].offsetTop,
+        () => { gestureActive = false; }
+      );
+  
     }, { passive: false });
   });
   
