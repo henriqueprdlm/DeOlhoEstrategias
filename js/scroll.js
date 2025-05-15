@@ -1,78 +1,68 @@
 // js/scroll.js
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = Array.from(document.querySelectorAll('[id^="section"]'));
-    let currentIndex = 0;
-    let gestureActive = false;
-    const duration = 600; // ms de duração da animação
+    const sections      = Array.from(document.querySelectorAll('[id^="section"]'));
+    let currentIndex    = 0;
+    let gestureActive   = false;
+    const duration      = 600;  // ms da animação
+    const epsilon       = 12;   // tolerância para múltiplos de 120
   
-    // easing suave
+    // easing easeInOutQuad
     function easeInOutQuad(t) {
       return t < 0.5
         ? 2 * t * t
         : -1 + (4 - 2 * t) * t;
     }
   
-    // animação do scroll
-    function smoothScrollTo(targetY, callback) {
+    // animação de scroll
+    function smoothScrollTo(targetY, cb) {
       const startY = window.scrollY;
-      const deltaY = targetY - startY;
-      let startTime = null;
+      const delta  = targetY - startY;
+      let startT   = null;
   
-      function step(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        window.scrollTo(
-          0,
-          startY + deltaY * easeInOutQuad(progress)
-        );
-        if (elapsed < duration) {
-          requestAnimationFrame(step);
-        } else {
-          callback && callback();
-        }
+      function step(ts) {
+        if (!startT) startT = ts;
+        const elapsed = ts - startT;
+        const pct     = Math.min(elapsed / duration, 1);
+        window.scrollTo(0, startY + delta * easeInOutQuad(pct));
+        if (pct < 1) requestAnimationFrame(step);
+        else cb && cb();
       }
-  
       requestAnimationFrame(step);
     }
   
-    // Determina índice inicial (se recarregar no meio da página)
+    // inicia currentIndex se recarregar no meio
     sections.forEach((sec, i) => {
       if (window.scrollY >= sec.offsetTop - 10) currentIndex = i;
     });
   
-    // Listener único de roda do mouse
     window.addEventListener('wheel', e => {
-      // só desktop
-      if (window.innerWidth <= 800) return;
+      if (window.innerWidth <= 800) return;          // mobile: CSS nativo
   
-      // só roda física (linhas), não trackpad (pixels)
-      if (e.deltaMode !== 1) return;
-  
-      e.preventDefault();
-  
-      // ignora se já estamos animando
-      if (gestureActive) return;
-  
-      // decide direção (qualquer deltaY, sem threshold)
-      let nextIndex = currentIndex;
-      if (e.deltaY > 0 && currentIndex < sections.length - 1) {
-        nextIndex++;
-      } else if (e.deltaY < 0 && currentIndex > 0) {
-        nextIndex--;
-      } else {
-        return; // sem seção válida para ir
+      // detecta roda física: deltaY ≃ múltiplo de 120 ± epsilon
+      const dy = Math.abs(e.deltaY);
+      const isMouseWheel = dy >= 100 && (dy % 120 < epsilon || 120 - (dy % 120) < epsilon);
+      if (!isMouseWheel) {
+        // trackpad (não-colidir com CSS scroll-snap)
+        return;
       }
   
-      // bloqueia novos eventos até o callback
+      e.preventDefault();
+      if (gestureActive) return;
+  
+      let next = currentIndex;
+      if (e.deltaY > 0 && currentIndex < sections.length - 1) {
+        next++;
+      } else if (e.deltaY < 0 && currentIndex > 0) {
+        next--;
+      } else {
+        return;
+      }
+  
       gestureActive = true;
-      currentIndex = nextIndex;
-  
-      smoothScrollTo(
-        sections[currentIndex].offsetTop,
-        () => { gestureActive = false; }
-      );
-  
+      currentIndex  = next;
+      smoothScrollTo(sections[currentIndex].offsetTop, () => {
+        gestureActive = false;
+      });
     }, { passive: false });
   });
   
