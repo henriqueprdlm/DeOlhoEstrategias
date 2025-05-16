@@ -140,7 +140,6 @@ footer {
 html, body {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    /* --scroll-duration: 600ms; */
 
     background-color: var(--roxo1);
 }

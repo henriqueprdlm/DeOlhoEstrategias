@@ -1,21 +1,23 @@
-let isScrolling = false;
-  let currentSectionIndex = 0;
+let scroll = 1;
 
-  const sections = document.querySelectorAll('section');
-
-  window.addEventListener('wheel', (e) => {
-    if (isScrolling) return;
-
-    isScrolling = true;
-    if (e.deltaY > 0) {
-      currentSectionIndex = Math.min(currentSectionIndex + 1, sections.length - 1);
-    } else {
-      currentSectionIndex = Math.max(currentSectionIndex - 1, 0);
+window.addEventListener('wheel', e => {
+    if (e.wheelDeltaY) {
+        if (e.wheelDeltaY === (e.deltaY * -3)) {
+            return;
+        }
+    } else if (e.deltaMode === 0) {
+        isTrackpad = true;
+        return;
     }
-
-    sections[currentSectionIndex].scrollIntoView({ behavior: 'smooth' });
-
-    setTimeout(() => {
-      isScrolling = false;
-    }, 800); // Ajuste esse tempo para controlar a “travada”
-  });
+    
+    if (scroll) {
+        scroll = 0;
+        setTimeout(() => {
+            scroll = 1;
+          }, 300);
+        return;
+    } else {
+        e.preventDefault();
+        return;
+    }
+}, { passive: false });
