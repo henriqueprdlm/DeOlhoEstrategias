@@ -1,23 +1,19 @@
 let scroll = 1;
 
 window.addEventListener('wheel', e => {
-    // ————————————— DETECÇÃO MÍNIMA —————————————
-    // Substitua todo este if/else de detecção pelo bloco abaixo:
-    if (e.deltaMode === 1) {           // deltaMode 1 = roda de mouse “clássica”  
-        /* continua no código */       
-    } else {                          // deltaMode 0 = trackpad/high‑res
-        return;                       // sai e deixa fluir
+    if (e.wheelDeltaY) {
+        if (e.wheelDeltaY === (e.deltaY * -3)) {
+            return;
+        }
+    } else if (e.deltaMode === 0) {
+        return;
     }
-    // ————————————— FIM DETECÇÃO —————————————
 
     if (scroll) {
         scroll = 0;
-        // ———————— THROTTLE LEVE ————————
-        // em vez de setTimeout(..., 500):
-        requestAnimationFrame(() => {
-          scroll = 1;
-        });
-        // —————— fim THROTTLE ——————
+        setTimeout(() => {
+            scroll = 1;
+          }, 500);
         return;
     } else {
         e.preventDefault();

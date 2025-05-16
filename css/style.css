@@ -200,7 +200,7 @@ img.circle {
 
 #section2-sobrenos {
     background-color: var(--cinza);
-    background-image: url(../img/fundo1.png);
+    background-image: url(../img/fundo-section2.png);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -286,7 +286,7 @@ img.circle {
 
 #section4-nossotime {
     background-color: var(--cinza);
-    background-image: url(../img/fundo2.jpg);
+    background-image: url(../img/fundo-section4.jpg);
     background-size: cover;
     background-position: center;
     padding-bottom: 75px;
@@ -399,7 +399,7 @@ img.circle {
 }
 
 #section6-final {
-    background-image: url(../img/fundo4.jpg);
+    background-image: url(../img/fundo-section6.jpg);
     background-size: cover;
     background-position: center;
     min-height: var(--tam-pag-com-footer);

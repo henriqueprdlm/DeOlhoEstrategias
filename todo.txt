@@ -1,4 +1,0 @@
-arrumar scroll
-imagens
-limpar arquivos
-header html
