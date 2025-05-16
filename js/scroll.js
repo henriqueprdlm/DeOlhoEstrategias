@@ -9,12 +9,12 @@ window.addEventListener('wheel', e => {
         isTrackpad = true;
         return;
     }
-    
+
     if (scroll) {
         scroll = 0;
         setTimeout(() => {
             scroll = 1;
-          }, 300);
+          }, 500);
         return;
     } else {
         e.preventDefault();
